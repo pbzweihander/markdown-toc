@@ -13,7 +13,7 @@ docker run -v $PWD:/app -w --rm -it pbzweihander/markdown-toc README.md
 ### cargo
 
 ```bash
-cargo install markdown-toc
+cargo install md-toc
 ```
 
 ### Build yourself
