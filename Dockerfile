@@ -1,8 +1,9 @@
-FROM rust:1.27
-
+FROM rust:1
 WORKDIR /usr/src/markdown-toc
-COPY . /usr/src/markdown-toc
+COPY . .
+RUN cargo build --release
 
-RUN cargo install --path .
+FROM bitnami/minideb:stretch
+COPY --from=0 /usr/src/markdown-toc/target/release/md-toc /usr/bin/md-toc
 
-ENTRYPOINT [ "markdown-toc" ]
+ENTRYPOINT [ "md-toc" ]
