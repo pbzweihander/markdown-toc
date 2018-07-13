@@ -4,13 +4,17 @@ Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown
 
 ## Installation
 
-### Docker
+### ~~Docker~~
+
+__Not published yet__
 
 ```bash
 docker run -v $PWD:/app -w --rm -it pbzweihander/markdown-toc README.md
 ```
 
-### cargo
+### ~~cargo~~
+
+__Not published yet__
 
 ```bash
 cargo install md-toc
