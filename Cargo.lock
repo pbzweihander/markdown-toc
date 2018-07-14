@@ -11,6 +11,15 @@ name = "md-toc"
 version = "0.1.0"
 dependencies = [
  "getopts 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
+ "slugify 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "slugify"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "unidecode 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -18,6 +27,13 @@ name = "unicode-width"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
+[[package]]
+name = "unidecode"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
 [metadata]
 "checksum getopts 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)" = "0a7292d30132fb5424b354f5dc02512a86e4c516fe544bb7a25e7f266951b797"
+"checksum slugify 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d6b8cf203d2088b831d7558f8e5151bfa420c57a34240b28cee29d0ae5f2ac8b"
 "checksum unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "882386231c45df4700b275c7ff55b6f3698780a650026380e72dabe76fa46526"
+"checksum unidecode 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "402bb19d8e03f1d1a7450e2bd613980869438e0666331be3e073089124aa1adc"

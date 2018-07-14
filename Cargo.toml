@@ -5,3 +5,4 @@ authors = ["pbzweihander <sd852456@naver.com>"]
 
 [dependencies]
 getopts = "0.2"
+slugify = "0.1"

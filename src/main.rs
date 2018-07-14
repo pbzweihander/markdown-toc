@@ -1,5 +1,8 @@
 extern crate getopts;
+#[macro_use]
+extern crate slugify;
 
+use slugify::slugify;
 use std::fs::File;
 use std::io::Read;
 use std::path::PathBuf;
@@ -215,6 +218,8 @@ fn main() {
         InputFile::Path(ref p) => File::open(p).unwrap().read_to_string(&mut content),
     }.unwrap();
 
+    println!("");
+
     if let Some(ref header) = config.header {
         println!("{}\n", header);
     }
@@ -233,7 +238,7 @@ fn main() {
                     if config.no_link {
                         h.title
                     } else {
-                        format!("[{}](#{})", h.title, h.title.replace(" ", "-"))
+                        format!("[{}](#{})", h.title, slugify!(&h.title),)
                     }
                 );
             }
