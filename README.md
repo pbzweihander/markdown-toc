@@ -1,5 +1,7 @@
 # markdown-toc
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown-toc](https://github.com/sebdah/markdown-toc).
 
 ## Table of Contents
@@ -16,7 +18,6 @@ Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown
     1. [Excluding links](#excluding-links)
     1. [Customizing header of ToC](#customizing-header-of-toc)
         1. [Excluding header](#excluding-header)
-
 
 ## Installation
 
