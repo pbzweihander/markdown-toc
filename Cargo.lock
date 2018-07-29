@@ -7,7 +7,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "md-toc"
+name = "markdown-toc"
 version = "0.1.0"
 dependencies = [
  "getopts 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",

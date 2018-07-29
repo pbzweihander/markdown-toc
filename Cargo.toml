@@ -1,7 +1,16 @@
 [package]
-name = "md-toc"
+name = "markdown-toc"
 version = "0.1.0"
 authors = ["pbzweihander <sd852456@naver.com>"]
+description = "Markdown Table of Contents generator"
+license = "MIT"
+repository = "https://github.com/pbzweihander/markdown-toc"
+readme = "README.md"
+keywords = ["markdown"]
+
+[[bin]]
+name = "md-toc"
+path = "src/main.rs"
 
 [dependencies]
 getopts = "0.2"
