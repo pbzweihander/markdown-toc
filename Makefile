@@ -31,3 +31,11 @@ tag-semver: build
 		docker tag $(REPO)/$(NAME):$(VERSION) $(REPO)/$(NAME):$(SEMVER_VERSION) ; \
 		docker push $(REPO)/$(NAME):$(SEMVER_VERSION) ; \
 	fi
+
+cargo-publish:
+	if curl -sSL https://crates.io/api/v1/crates/$(NAME)/versions | jq -r ".versions | .[].num" | grep -q $(SEMVER_VERSION); then \
+		echo "Tag $(SEMVER_VERSION) already exists - not publishing" ; \
+	else \
+		cargo publish ; \
+	fi
+

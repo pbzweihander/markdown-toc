@@ -7,6 +7,12 @@ docker_login: &docker_login
       docker --version
       docker-compose --version
       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+cargo_login: &cargo_login
+  run:
+    name: authentication
+    command:  |
+      cargo --version
+      cargo login "$CARGO_TOKEN"
 
 workflows:
   version: 2
@@ -96,4 +102,7 @@ jobs:
           keys:
           - target-{{ checksum "Cargo.lock" }}
           - target-
-      - run: cargo publish --token "$CARGO_TOKEN"
+      - <<: *cargo_login
+      - run: curl -sSL https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 --output /usr/bin/jq
+      - run: chmod +x /usr/bin/jq
+      - run: make cargo-publish
