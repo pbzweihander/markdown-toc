@@ -1,7 +1,7 @@
 # markdown-toc
 
-[![circleci](https://circleci.com/gh/pbzweihander/daumdic-rs.svg?style=shield)](https://circleci.com/gh/pbzweihander/daumdic-rs)
-[![crate.io](https://img.shields.io/crates/v/daumdic.svg)](https://crates.io/crates/daumdic)
+[![circleci](https://circleci.com/gh/pbzweihander/markdown-toc.svg?style=shield)](https://circleci.com/gh/pbzweihander/markdown-toc)
+[![crate.io](https://img.shields.io/crates/v/markdown-toc.svg)](https://crates.io/crates/markdown-toc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown-toc](https://github.com/sebdah/markdown-toc).
