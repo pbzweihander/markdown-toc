@@ -1,5 +1,7 @@
 # markdown-toc
 
+[![circleci](https://circleci.com/gh/pbzweihander/daumdic-rs.svg?style=shield)](https://circleci.com/gh/pbzweihander/daumdic-rs)
+[![crate.io](https://img.shields.io/crates/v/daumdic.svg)](https://crates.io/crates/daumdic)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown-toc](https://github.com/sebdah/markdown-toc).
@@ -21,20 +23,17 @@ Table-of-Contents (toc) generator, written in Rust. Inspired by [sebdah/markdown
 
 ## Installation
 
-### ~~Run in Docker~~
-
-Not published yet
+### Run in Docker
 
 ```bash
 docker run -v $PWD:/app -w /app --rm -it pbzweihander/markdown-toc README.md
 ```
 
-### ~~Install with cargo~~
-
-Not published yet
+### Install with cargo
 
 ```bash
 cargo install md-toc
+md-toc README.md
 ```
 
 ### Build yourself
@@ -43,6 +42,7 @@ cargo install md-toc
 git clone https://github.com/pbzweihander/markdown-toc.git
 cargo build --release
 cargo install --path .
+md-toc README.md
 ```
 
 ## Usage
@@ -76,25 +76,21 @@ md-toc README.md
 
 Output:
 
-```markdown
+    ## Table of Contents
 
-## Table of Contents
-
-1. [markdown-toc](#markdown-toc)
-    1. [Table of Contents](#table-of-contents)
-    1. [Installation](#installation)
-        1. [Run in Docker](#run-in-docker)
-        1. [Install with cargo](#install-with-cargo)
-        1. [Build yourself](#build-yourself)
-    1. [Usage](#usage)
-        1. [Generating basic ToC](#generating-basic-toc)
-        1. [Customizing bullets](#customizing-bullets)
-        1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
-        1. [Excluding links](#excluding-links)
-        1. [Customizing header of ToC](#customizing-header-of-toc)
-            1. [Excluding header](#excluding-header)
-
-```
+    1. [markdown-toc](#markdown-toc)
+        1. [Table of Contents](#table-of-contents)
+        1. [Installation](#installation)
+            1. [Run in Docker](#run-in-docker)
+            1. [Install with cargo](#install-with-cargo)
+            1. [Build yourself](#build-yourself)
+        1. [Usage](#usage)
+            1. [Generating basic ToC](#generating-basic-toc)
+            1. [Customizing bullets](#customizing-bullets)
+            1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
+            1. [Excluding links](#excluding-links)
+            1. [Customizing header of ToC](#customizing-header-of-toc)
+                1. [Excluding header](#excluding-header)
 
 ### Customizing bullets
 
@@ -104,25 +100,21 @@ md-toc README.md --bullet "-" --indent 2
 
 Output:
 
-```markdown
+    ## Table of Contents
 
-## Table of Contents
-
-- [markdown-toc](#markdown-toc)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-    - [Run in Docker](#run-in-docker)
-    - [Install with cargo](#install-with-cargo)
-    - [Build yourself](#build-yourself)
-  - [Usage](#usage)
-    - [Generating basic ToC](#generating-basic-toc)
-    - [Customizing bullets](#customizing-bullets)
-    - [Limiting the depth of headers](#limiting-the-depth-of-headers)
-    - [Excluding links](#excluding-links)
-    - [Customizing header of ToC](#customizing-header-of-toc)
-      - [Excluding header](#excluding-header)
-
-```
+    - [markdown-toc](#markdown-toc)
+    - [Table of Contents](#table-of-contents)
+    - [Installation](#installation)
+        - [Run in Docker](#run-in-docker)
+        - [Install with cargo](#install-with-cargo)
+        - [Build yourself](#build-yourself)
+    - [Usage](#usage)
+        - [Generating basic ToC](#generating-basic-toc)
+        - [Customizing bullets](#customizing-bullets)
+        - [Limiting the depth of headers](#limiting-the-depth-of-headers)
+        - [Excluding links](#excluding-links)
+        - [Customizing header of ToC](#customizing-header-of-toc)
+        - [Excluding header](#excluding-header)
 
 ### Limiting the depth of headers
 
@@ -132,23 +124,19 @@ md-toc README.md --min-depth 1 --max-depth 2
 
 Output:
 
-```markdown
+    ## Table of Contents
 
-## Table of Contents
-
-1. [Table of Contents](#table-of-contents)
-1. [Installation](#installation)
-    1. [Run in Docker](#run-in-docker)
-    1. [Install with cargo](#install-with-cargo)
-    1. [Build yourself](#build-yourself)
-1. [Usage](#usage)
-    1. [Generating basic ToC](#generating-basic-toc)
-    1. [Customizing bullets](#customizing-bullets)
-    1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
-    1. [Excluding links](#excluding-links)
-    1. [Customizing header of ToC](#customizing-header-of-toc)
-
-```
+    1. [Table of Contents](#table-of-contents)
+    1. [Installation](#installation)
+        1. [Run in Docker](#run-in-docker)
+        1. [Install with cargo](#install-with-cargo)
+        1. [Build yourself](#build-yourself)
+    1. [Usage](#usage)
+        1. [Generating basic ToC](#generating-basic-toc)
+        1. [Customizing bullets](#customizing-bullets)
+        1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
+        1. [Excluding links](#excluding-links)
+        1. [Customizing header of ToC](#customizing-header-of-toc)
 
 ### Excluding links
 
@@ -158,25 +146,21 @@ md-toc README.md --no-link
 
 Output:
 
-```markdown
+    ## Table of Contents
 
-## Table of Contents
-
-1. markdown-toc
-    1. Table of Contents
-    1. Installation
-        1. Run in Docker
-        1. Install with cargo
-        1. Build yourself
-    1. Usage
-        1. Generating basic ToC
-        1. Customizing bullets
-        1. Limiting the depth of headers
-        1. Excluding links
-        1. Customizing header of ToC
-            1. Excluding header
-
-```
+    1. markdown-toc
+        1. Table of Contents
+        1. Installation
+            1. Run in Docker
+            1. Install with cargo
+            1. Build yourself
+        1. Usage
+            1. Generating basic ToC
+            1. Customizing bullets
+            1. Limiting the depth of headers
+            1. Excluding links
+            1. Customizing header of ToC
+                1. Excluding header
 
 ### Customizing header of ToC
 
@@ -186,25 +170,21 @@ md-toc README.md --header "# ToC"
 
 Output:
 
-```markdown
-# ToC
+    # ToC
 
-1. [markdown-toc](#markdown-toc)
-    1. [Table of Contents](#table-of-contents)
-    1. [Installation](#installation)
-        1. [Run in Docker](#run-in-docker)
-        1. [Install with cargo](#install-with-cargo)
-        1. [Build yourself](#build-yourself)
-    1. [Usage](#usage)
-        1. [Generating basic ToC](#generating-basic-toc)
-        1. [Customizing bullets](#customizing-bullets)
-        1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
-        1. [Excluding links](#excluding-links)
-        1. [Customizing header of ToC](#customizing-header-of-toc)
-            1. [Excluding header](#excluding-header)
-
-
-```
+    1. [markdown-toc](#markdown-toc)
+        1. [Table of Contents](#table-of-contents)
+        1. [Installation](#installation)
+            1. [Run in Docker](#run-in-docker)
+            1. [Install with cargo](#install-with-cargo)
+            1. [Build yourself](#build-yourself)
+        1. [Usage](#usage)
+            1. [Generating basic ToC](#generating-basic-toc)
+            1. [Customizing bullets](#customizing-bullets)
+            1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
+            1. [Excluding links](#excluding-links)
+            1. [Customizing header of ToC](#customizing-header-of-toc)
+                1. [Excluding header](#excluding-header)
 
 #### Excluding header
 
@@ -214,20 +194,16 @@ md-toc README.md --no-header
 
 Output:
 
-```markdown
-
-1. [markdown-toc](#markdown-toc)
-    1. [Table of Contents](#table-of-contents)
-    1. [Installation](#installation)
-        1. [Run in Docker](#run-in-docker)
-        1. [Install with cargo](#install-with-cargo)
-        1. [Build yourself](#build-yourself)
-    1. [Usage](#usage)
-        1. [Generating basic ToC](#generating-basic-toc)
-        1. [Customizing bullets](#customizing-bullets)
-        1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
-        1. [Excluding links](#excluding-links)
-        1. [Customizing header of ToC](#customizing-header-of-toc)
-            1. [Excluding header](#excluding-header)
-
-```
+    1. [markdown-toc](#markdown-toc)
+        1. [Table of Contents](#table-of-contents)
+        1. [Installation](#installation)
+            1. [Run in Docker](#run-in-docker)
+            1. [Install with cargo](#install-with-cargo)
+            1. [Build yourself](#build-yourself)
+        1. [Usage](#usage)
+            1. [Generating basic ToC](#generating-basic-toc)
+            1. [Customizing bullets](#customizing-bullets)
+            1. [Limiting the depth of headers](#limiting-the-depth-of-headers)
+            1. [Excluding links](#excluding-links)
+            1. [Customizing header of ToC](#customizing-header-of-toc)
+                1. [Excluding header](#excluding-header)
