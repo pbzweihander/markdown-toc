@@ -32,7 +32,7 @@ docker run -v $PWD:/app -w /app --rm -it pbzweihander/markdown-toc README.md
 ### Install with cargo
 
 ```bash
-cargo install md-toc
+cargo install markdown-toc
 md-toc README.md
 ```
 
@@ -40,6 +40,7 @@ md-toc README.md
 
 ```bash
 git clone https://github.com/pbzweihander/markdown-toc.git
+cd markdown-toc
 cargo build --release
 cargo install --path .
 md-toc README.md
