@@ -14,4 +14,4 @@ path = "src/main.rs"
 
 [dependencies]
 getopts = "0.2"
-slugify = "0.1"
+percent-encoding = "1.0"

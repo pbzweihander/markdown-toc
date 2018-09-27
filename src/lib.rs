@@ -1,9 +1,15 @@
-#[macro_use]
-extern crate slugify;
+extern crate percent_encoding;
 
-use slugify::slugify;
 use std::path::PathBuf;
 use std::str::FromStr;
+
+fn slugify(text: &str) -> String {
+    use percent_encoding::{percent_encode, DEFAULT_ENCODE_SET};
+    percent_encode(
+        text.replace(" ", "-").to_lowercase().as_bytes(),
+        DEFAULT_ENCODE_SET,
+    ).to_string()
+}
 
 pub struct Heading {
     pub depth: usize,
@@ -26,8 +32,7 @@ impl FromStr for Heading {
                     } else {
                         false
                     }
-                })
-                .collect::<String>()
+                }).collect::<String>()
                 .trim_left()
                 .to_owned();
             Ok(Heading {
@@ -53,7 +58,7 @@ impl Heading {
                 if config.no_link {
                     self.title.clone()
                 } else {
-                    format!("[{}](#{})", &self.title, slugify!(&self.title))
+                    format!("[{}](#{})", &self.title, slugify(&self.title))
                 }
             ))
         } else {
