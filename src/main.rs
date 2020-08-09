@@ -142,8 +142,18 @@ fn main() {
         println!("{}\n", header);
     }
 
+    let mut in_code_fence = false;
+
     content
         .lines()
+        .filter(|line| {
+            if line.starts_with("```") {
+                in_code_fence = !in_code_fence;
+                false
+            } else {
+                !in_code_fence
+            }
+        })
         .map(Heading::from_str)
         .filter_map(Result::ok)
         .filter_map(|h| h.format(&config))
