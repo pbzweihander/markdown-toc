@@ -21,7 +21,7 @@ impl FromStr for Heading {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let trimmed = s.trim_right();
+        let trimmed = s.trim_end();
         if trimmed.starts_with("#") {
             let mut depth = 0usize;
             let title = trimmed
@@ -35,7 +35,7 @@ impl FromStr for Heading {
                     }
                 })
                 .collect::<String>()
-                .trim_left()
+                .trim_start()
                 .to_owned();
             Ok(Heading {
                 depth: depth - 1,
