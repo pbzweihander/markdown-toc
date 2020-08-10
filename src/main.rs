@@ -142,12 +142,35 @@ fn main() {
         println!("{}\n", header);
     }
 
+    let mut code_fence = Fence::None;
+
     content
         .lines()
+        .filter(|line| match code_fence {
+            Fence::None => {
+                if line.starts_with("```") || line.starts_with("~~~") {
+                    code_fence = Fence::Open(&line[..3]);
+                    false
+                } else {
+                    true
+                }
+            }
+            Fence::Open(tag) => {
+                if line.starts_with(tag) {
+                    code_fence = Fence::None;
+                }
+                false
+            }
+        })
         .map(Heading::from_str)
         .filter_map(Result::ok)
         .filter_map(|h| h.format(&config))
         .for_each(|l| {
             println!("{}", l);
         });
+}
+
+enum Fence<'e> {
+    Open(&'e str),
+    None,
 }
