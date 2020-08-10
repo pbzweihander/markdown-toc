@@ -134,7 +134,8 @@ fn main() {
     match config.input_file {
         InputFile::StdIn => std::io::stdin().read_to_string(&mut content),
         InputFile::Path(ref p) => File::open(p).unwrap().read_to_string(&mut content),
-    }.unwrap();
+    }
+    .unwrap();
 
     println!("");
 

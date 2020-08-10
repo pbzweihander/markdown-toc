@@ -33,7 +33,8 @@ impl FromStr for Heading {
                     } else {
                         false
                     }
-                }).collect::<String>()
+                })
+                .collect::<String>()
                 .trim_left()
                 .to_owned();
             Ok(Heading {
