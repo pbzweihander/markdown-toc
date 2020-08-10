@@ -1,14 +1,15 @@
 extern crate percent_encoding;
 
+use percent_encoding::{percent_encode, CONTROLS};
 use std::path::PathBuf;
 use std::str::FromStr;
 
 fn slugify(text: &str) -> String {
-    use percent_encoding::{percent_encode, DEFAULT_ENCODE_SET};
     percent_encode(
         text.replace(" ", "-").to_lowercase().as_bytes(),
-        DEFAULT_ENCODE_SET,
-    ).to_string()
+        CONTROLS,
+    )
+    .to_string()
 }
 
 pub struct Heading {
