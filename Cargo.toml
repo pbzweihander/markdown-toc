@@ -1,6 +1,6 @@
 [package]
 name = "markdown-toc"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["pbzweihander <pbzweihander@gmail.com>"]
 description = "Markdown Table of Contents generator"
 license = "MIT"
