@@ -22,6 +22,7 @@ workflows:
       - musl_build
       - docker_push:
           requires:
+            - test
             - musl_build
           filters:
             branches:
@@ -29,6 +30,7 @@ workflows:
                 - master
       - cargo_publish:
           requires:
+            - test
             - musl_build
           filters:
             branches:
