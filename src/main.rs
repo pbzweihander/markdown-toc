@@ -35,16 +35,16 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
             "{str}",
         )
         .optflag("", "no-link", "Exclude links in ToC")
-        .optflag("", "no-header", "Exclude the header of ToC");
-    // .optflag(
-    //     "i",
-    //     "inline",
-    //     "With this flag, the full markdown file will be printed with ToC."
-    // )
-    // .optflag(
-    //     "",
-    //     "replace", "Should be used with --inline option and FILE should not be stdin. The original file will be replace instead of printing to standard output."
-    // );
+        .optflag("", "no-header", "Exclude the header of ToC")
+        .optflag(
+            "i",
+            "inline",
+            "With this flag, the full markdown file will be printed with ToC."
+        )
+        .optflag(
+            "",
+            "replace", "Should be used with --inline option and FILE should not be stdin. The original file will be replace instead of printing to standard output."
+        );
 
     let opt_matches = opts.parse(args).map_err(|_| ())?;
 
@@ -69,15 +69,15 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
         };
     }
 
-    // let (input_file, is_input_stdin) = if !opt_matches.free.is_empty() {
-    //     if opt_matches.free[0] == "-" {
-    //         (InputFile::StdIn, true)
-    //     } else {
-    //         (InputFile::Path(PathBuf::from(&opt_matches.free[0])), false)
-    //     }
-    // } else {
-    //     return Err(());
-    // };
+    let (input_file, is_input_stdin) = if !opt_matches.free.is_empty() {
+        if opt_matches.free[0] == "-" {
+            (InputFile::StdIn, true)
+        } else {
+            (InputFile::Path(PathBuf::from(&opt_matches.free[0])), false)
+        }
+    } else {
+        return Err(());
+    };
 
     Ok(Config {
         input_file: if !opt_matches.free.is_empty() {
@@ -99,16 +99,16 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
         } else {
             get_opt_or_default_option!("header", header)
         },
-        // inline: match (
-        //     opt_matches.opt_present("inline"),
-        //     opt_matches.opt_present("replace"),
-        //     is_input_stdin,
-        // ) {
-        //     (true, true, false) => Inline::InlineAndReplace,
-        //     (true, false, _) => Inline::Inline,
-        //     (false, false, _) => Inline::None,
-        //     _ => return Err(()),
-        // },
+        inline: match (
+            opt_matches.opt_present("inline"),
+            opt_matches.opt_present("replace"),
+            is_input_stdin,
+        ) {
+            (true, true, false) => Inline::InlineAndReplace,
+            (true, false, _) => Inline::Inline,
+            (false, false, _) => Inline::None,
+            _ => return Err(()),
+        },
     })
 }
 

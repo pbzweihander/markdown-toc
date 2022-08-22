@@ -74,11 +74,11 @@ pub enum InputFile {
     StdIn,
 }
 
-// enum Inline {
-//     None,
-//     Inline,
-//     InlineAndReplace,
-// }
+pub enum Inline {
+    None,
+    Inline,
+    InlineAndReplace,
+}
 
 pub struct Config {
     pub input_file: InputFile,
@@ -88,7 +88,7 @@ pub struct Config {
     pub min_depth: usize,
     pub header: Option<String>,
     pub no_link: bool,
-    // inline: Inline,
+    pub inline: Inline,
 }
 
 impl Default for Config {
@@ -101,7 +101,7 @@ impl Default for Config {
             min_depth: 0,
             no_link: false,
             header: Some(String::from("## Table of Contents")),
-            // inline: Inline::None,
+            inline: Inline::None,
         }
     }
 }
