@@ -187,9 +187,11 @@ fn main() {
                     .iter()
                     .filter_map(|h| h.reduce_ident(&config))
                     .collect::<Vec<String>>();
-                output.push_str(&toc.join("\n"));
 
-                fs::write("output.md", output).unwrap_or_else(|e| {
+                output.push_str(&toc.join("\n"));
+                output.push_str(&content);
+
+                fs::write(p, output).unwrap_or_else(|e| {
                     eprintln!("Unable to write: {e}");
                     process::exit(0);
                 });
