@@ -145,7 +145,7 @@ fn main() {
 
     let mut code_fence = Fence::None;
 
-    content
+    let headings = content
         .lines()
         .filter(|line| match code_fence {
             Fence::None => {
@@ -165,12 +165,22 @@ fn main() {
         })
         .map(Heading::from_str)
         .filter_map(Result::ok)
-        .filter_map(|h| h.format(&config))
-        .for_each(|l| {
-            println!("{}", l);
-        });
-    
-        println!("{:#?}", config);
+        .filter_map(|h| h.format(&config)).collect::<Vec<String>>();
+
+    let print_toc = || {
+        headings.iter().for_each(|h| println!("{}", h));
+    };
+
+    match config.inline {
+        Inline::Inline => {
+            print_toc();
+            println!("{}", content)
+        },
+        Inline::InlineAndReplace => {},
+        _ => {
+            print_toc()
+        }
+    }
 }
 
 enum Fence<'e> {
