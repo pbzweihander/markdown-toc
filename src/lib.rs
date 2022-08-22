@@ -5,11 +5,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 fn slugify(text: &str) -> String {
-    percent_encode(
-        text.replace(" ", "-").to_lowercase().as_bytes(),
-        CONTROLS,
-    )
-    .to_string()
+    percent_encode(text.replace(" ", "-").to_lowercase().as_bytes(), CONTROLS).to_string()
 }
 
 pub struct Heading {
@@ -67,6 +63,15 @@ impl Heading {
             None
         }
     }
+
+    pub fn reduce_ident(&self, config: &Config) -> Option<String> {
+        let ident = format!("{}", " ".repeat(config.indent));
+        if let Some(heading) = self.format(config) {
+            return Some(heading.replacen(&ident, "", 1));
+        }
+
+        None
+    }
 }
 
 pub enum InputFile {
@@ -74,11 +79,21 @@ pub enum InputFile {
     StdIn,
 }
 
-// enum Inline {
-//     None,
-//     Inline,
-//     InlineAndReplace,
-// }
+impl InputFile {
+    pub fn is_file(&self) -> bool {
+        match self {
+            InputFile::Path(_) => true,
+            _ => false,
+        }
+    }
+}
+
+#[derive(PartialEq, Eq)]
+pub enum Inline {
+    None,
+    Inline,
+    InlineAndReplace,
+}
 
 pub struct Config {
     pub input_file: InputFile,
@@ -88,7 +103,7 @@ pub struct Config {
     pub min_depth: usize,
     pub header: Option<String>,
     pub no_link: bool,
-    // inline: Inline,
+    pub inline: Inline,
 }
 
 impl Default for Config {
@@ -101,7 +116,7 @@ impl Default for Config {
             min_depth: 0,
             no_link: false,
             header: Some(String::from("## Table of Contents")),
-            // inline: Inline::None,
+            inline: Inline::None,
         }
     }
 }

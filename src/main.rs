@@ -2,9 +2,10 @@ extern crate getopts;
 extern crate markdown_toc;
 
 use markdown_toc::*;
-use std::fs::File;
+use std::fs::{self, File};
 use std::io::Read;
 use std::path::PathBuf;
+use std::process;
 use std::str::FromStr;
 
 fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config, ()> {
@@ -35,16 +36,16 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
             "{str}",
         )
         .optflag("", "no-link", "Exclude links in ToC")
-        .optflag("", "no-header", "Exclude the header of ToC");
-    // .optflag(
-    //     "i",
-    //     "inline",
-    //     "With this flag, the full markdown file will be printed with ToC."
-    // )
-    // .optflag(
-    //     "",
-    //     "replace", "Should be used with --inline option and FILE should not be stdin. The original file will be replace instead of printing to standard output."
-    // );
+        .optflag("", "no-header", "Exclude the header of ToC")
+        .optflag(
+            "i",
+            "inline",
+            "With this flag, the full markdown file will be printed with ToC."
+        )
+        .optflag(
+            "r",
+            "replace", "Should be used with --inline option and FILE should not be stdin. The original file will be replace instead of printing to standard output."
+        );
 
     let opt_matches = opts.parse(args).map_err(|_| ())?;
 
@@ -69,26 +70,18 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
         };
     }
 
-    // let (input_file, is_input_stdin) = if !opt_matches.free.is_empty() {
-    //     if opt_matches.free[0] == "-" {
-    //         (InputFile::StdIn, true)
-    //     } else {
-    //         (InputFile::Path(PathBuf::from(&opt_matches.free[0])), false)
-    //     }
-    // } else {
-    //     return Err(());
-    // };
+    let (input_file, is_input_stdin) = if !opt_matches.free.is_empty() {
+        if opt_matches.free[0] == "-" {
+            (InputFile::StdIn, true)
+        } else {
+            (InputFile::Path(PathBuf::from(&opt_matches.free[0])), false)
+        }
+    } else {
+        return Err(());
+    };
 
     Ok(Config {
-        input_file: if !opt_matches.free.is_empty() {
-            if opt_matches.free[0] == "-" {
-                InputFile::StdIn
-            } else {
-                InputFile::Path(PathBuf::from(&opt_matches.free[0]))
-            }
-        } else {
-            return Err(());
-        },
+        input_file,
         bullet: get_opt_or_default!("bullet", bullet),
         indent: get_opt_or_default!("indent", indent),
         max_depth: get_opt_or_default_option!("max-depth", max_depth),
@@ -99,16 +92,16 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
         } else {
             get_opt_or_default_option!("header", header)
         },
-        // inline: match (
-        //     opt_matches.opt_present("inline"),
-        //     opt_matches.opt_present("replace"),
-        //     is_input_stdin,
-        // ) {
-        //     (true, true, false) => Inline::InlineAndReplace,
-        //     (true, false, _) => Inline::Inline,
-        //     (false, false, _) => Inline::None,
-        //     _ => return Err(()),
-        // },
+        inline: match (
+            opt_matches.opt_present("inline"),
+            opt_matches.opt_present("replace"),
+            is_input_stdin,
+        ) {
+            (true, true, false) => Inline::InlineAndReplace,
+            (true, false, _) => Inline::Inline,
+            (false, false, _) => Inline::None,
+            _ => return Err(()),
+        },
     })
 }
 
@@ -139,13 +132,13 @@ fn main() {
 
     println!("");
 
-    if let Some(ref header) = config.header {
-        println!("{}\n", header);
+    if config.header.is_some() && config.inline != Inline::InlineAndReplace {
+        println!("{}\n", config.header.as_ref().unwrap());
     }
 
     let mut code_fence = Fence::None;
 
-    content
+    let headings = content
         .lines()
         .filter(|line| match code_fence {
             Fence::None => {
@@ -165,10 +158,47 @@ fn main() {
         })
         .map(Heading::from_str)
         .filter_map(Result::ok)
-        .filter_map(|h| h.format(&config))
-        .for_each(|l| {
-            println!("{}", l);
-        });
+        .collect::<Vec<Heading>>();
+
+    let print_toc = || {
+        headings
+            .iter()
+            .filter_map(|h| h.format(&config))
+            .for_each(|l| {
+                println!("{}", l);
+            });
+    };
+
+    match config.inline {
+        Inline::Inline => {
+            print_toc();
+            println!("{}", content)
+        }
+        Inline::InlineAndReplace if config.input_file.is_file() => {
+            if let InputFile::Path(ref p) = config.input_file {
+                let mut output = String::new();
+
+                if let Some(ref header) = config.header {
+                    output.push_str(&header);
+                    output.push_str("\n\n");
+                }
+
+                let toc = headings
+                    .iter()
+                    .filter_map(|h| h.reduce_ident(&config))
+                    .collect::<Vec<String>>();
+
+                output.push_str(&toc.join("\n"));
+                output.push_str(&content);
+
+                fs::write(p, output).unwrap_or_else(|e| {
+                    eprintln!("Unable to write: {e}");
+                    process::exit(0);
+                });
+            }
+        }
+        _ => print_toc(),
+    }
 }
 
 enum Fence<'e> {
