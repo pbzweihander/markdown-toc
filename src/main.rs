@@ -2,9 +2,10 @@ extern crate getopts;
 extern crate markdown_toc;
 
 use markdown_toc::*;
-use std::fs::File;
+use std::fs::{File, self};
 use std::io::Read;
 use std::path::PathBuf;
+use std::process;
 use std::str::FromStr;
 
 fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config, ()> {
@@ -80,15 +81,7 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
     };
 
     Ok(Config {
-        input_file: if !opt_matches.free.is_empty() {
-            if opt_matches.free[0] == "-" {
-                InputFile::StdIn
-            } else {
-                InputFile::Path(PathBuf::from(&opt_matches.free[0]))
-            }
-        } else {
-            return Err(());
-        },
+        input_file,
         bullet: get_opt_or_default!("bullet", bullet),
         indent: get_opt_or_default!("indent", indent),
         max_depth: get_opt_or_default_option!("max-depth", max_depth),
@@ -176,7 +169,14 @@ fn main() {
             print_toc();
             println!("{}", content)
         },
-        Inline::InlineAndReplace => {},
+        Inline::InlineAndReplace if config.input_file.is_file()  => {
+            if let InputFile::Path(p) = config.input_file {    
+                fs::write(p, "some cool content").unwrap_or_else(|e| {
+                    eprintln!("Failed to write to the output file: {e}");
+                    process::exit(0);
+                });
+            }
+        },
         _ => {
             print_toc()
         }

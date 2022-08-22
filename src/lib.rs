@@ -75,7 +75,15 @@ pub enum InputFile {
     StdIn,
 }
 
-#[derive(Debug)]
+impl InputFile {
+    pub fn is_file(&self) -> bool {
+        match self {
+            InputFile::Path(_) => true,
+            _ => false
+        }
+    }
+}
+
 pub enum Inline {
     None,
     Inline,
