@@ -5,11 +5,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 fn slugify(text: &str) -> String {
-    percent_encode(
-        text.replace(" ", "-").to_lowercase().as_bytes(),
-        CONTROLS,
-    )
-    .to_string()
+    percent_encode(text.replace(" ", "-").to_lowercase().as_bytes(), CONTROLS).to_string()
 }
 
 pub struct Heading {
@@ -67,8 +63,16 @@ impl Heading {
             None
         }
     }
-}
 
+    pub fn reduce_ident(&self, config: &Config) -> Option<String> {
+        let ident = format!("{}", " ".repeat(config.indent));
+        if let Some(heading) = self.format(config) {
+            return Some(heading.replacen(&ident, "", 1));
+        }
+
+        None
+    }
+}
 
 pub enum InputFile {
     Path(PathBuf),
@@ -79,11 +83,12 @@ impl InputFile {
     pub fn is_file(&self) -> bool {
         match self {
             InputFile::Path(_) => true,
-            _ => false
+            _ => false,
         }
     }
 }
 
+#[derive(PartialEq, Eq)]
 pub enum Inline {
     None,
     Inline,

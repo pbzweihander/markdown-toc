@@ -2,7 +2,7 @@ extern crate getopts;
 extern crate markdown_toc;
 
 use markdown_toc::*;
-use std::fs::{File, self};
+use std::fs::{self, File};
 use std::io::Read;
 use std::path::PathBuf;
 use std::process;
@@ -132,8 +132,8 @@ fn main() {
 
     println!("");
 
-    if let Some(ref header) = config.header {
-        println!("{}\n", header);
+    if config.header.is_some() && config.inline != Inline::InlineAndReplace {
+        println!("{}\n", config.header.as_ref().unwrap());
     }
 
     let mut code_fence = Fence::None;
@@ -158,28 +158,44 @@ fn main() {
         })
         .map(Heading::from_str)
         .filter_map(Result::ok)
-        .filter_map(|h| h.format(&config)).collect::<Vec<String>>();
+        .collect::<Vec<Heading>>();
 
     let print_toc = || {
-        headings.iter().for_each(|h| println!("{}", h));
+        headings
+            .iter()
+            .filter_map(|h| h.format(&config))
+            .for_each(|l| {
+                println!("{}", l);
+            });
     };
 
     match config.inline {
         Inline::Inline => {
             print_toc();
             println!("{}", content)
-        },
-        Inline::InlineAndReplace if config.input_file.is_file()  => {
-            if let InputFile::Path(p) = config.input_file {    
-                fs::write(p, "some cool content").unwrap_or_else(|e| {
-                    eprintln!("Failed to write to the output file: {e}");
+        }
+        Inline::InlineAndReplace if config.input_file.is_file() => {
+            if let InputFile::Path(ref p) = config.input_file {
+                let mut output = String::new();
+
+                if let Some(ref header) = config.header {
+                    output.push_str(&header);
+                    output.push_str("\n\n");
+                }
+
+                let toc = headings
+                    .iter()
+                    .filter_map(|h| h.reduce_ident(&config))
+                    .collect::<Vec<String>>();
+                output.push_str(&toc.join("\n"));
+
+                fs::write("output.md", output).unwrap_or_else(|e| {
+                    eprintln!("Unable to write: {e}");
                     process::exit(0);
                 });
             }
-        },
-        _ => {
-            print_toc()
         }
+        _ => print_toc(),
     }
 }
 
