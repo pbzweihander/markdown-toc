@@ -42,7 +42,7 @@ fn parse_command(opts: &mut getopts::Options, args: &[String]) -> Result<Config,
             "With this flag, the full markdown file will be printed with ToC."
         )
         .optflag(
-            "",
+            "r",
             "replace", "Should be used with --inline option and FILE should not be stdin. The original file will be replace instead of printing to standard output."
         );
 
@@ -169,6 +169,8 @@ fn main() {
         .for_each(|l| {
             println!("{}", l);
         });
+    
+        println!("{:#?}", config);
 }
 
 enum Fence<'e> {

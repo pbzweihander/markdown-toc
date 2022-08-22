@@ -69,11 +69,13 @@ impl Heading {
     }
 }
 
+
 pub enum InputFile {
     Path(PathBuf),
     StdIn,
 }
 
+#[derive(Debug)]
 pub enum Inline {
     None,
     Inline,
