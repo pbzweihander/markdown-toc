@@ -801,7 +801,7 @@ use regular HTML `<img>` tags.
 
 ## Miscellaneous
 
-### Automatic Links
+### 1. Automatic Links
 
 Markdown supports a shortcut style for creating "automatic" links for URLs and email addresses: simply surround the URL or email address with angle brackets. What this means is that if you want to show the actual text of a URL or email address, and also have it be a clickable link, you can do this:
 
@@ -834,7 +834,7 @@ will probably eventually start receiving spam.)
 
 
 
-### Backslash Escapes
+### 2. Backslash Escapes
 
 Markdown allows you to use backslash escapes to generate literal
 characters which would otherwise have special meaning in Markdown's

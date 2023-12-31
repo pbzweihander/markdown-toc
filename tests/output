@@ -16,8 +16,8 @@ Emphasis, 2
 Code, 2
 Images, 2
 Miscellaneous, 1
-Automatic Links, 2
-Backslash Escapes, 2
+1. Automatic Links, 2
+2. Backslash Escapes, 2
 한글 테스트, 1
 - [Test Markdown Document](#test-markdown-document)
   - [Overview](#overview)
@@ -37,8 +37,8 @@ Backslash Escapes, 2
     - [Code](#code)
     - [Images](#images)
   - [Miscellaneous](#miscellaneous)
-    - [Automatic Links](#automatic-links)
-    - [Backslash Escapes](#backslash-escapes)
+    - [1. Automatic Links](#1-automatic-links)
+    - [2. Backslash Escapes](#2-backslash-escapes)
   - [한글 테스트](#%ED%95%9C%EA%B8%80-%ED%85%8C%EC%8A%A4%ED%8A%B8)
 1. Overview
 1. Block Elements
