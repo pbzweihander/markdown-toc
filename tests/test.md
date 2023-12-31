@@ -505,7 +505,7 @@ following lines will produce a horizontal rule:
 
 ## Span Elements
 
-### Links
+### Links (Anchor)
 
 Markdown supports two style of links: *inline* and *reference*.
 

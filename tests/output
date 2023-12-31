@@ -11,7 +11,7 @@ Lists, 2
 Code Blocks, 2
 Horizontal Rules, 2
 Span Elements, 1
-Links, 2
+Links (Anchor), 2
 Emphasis, 2
 Code, 2
 Images, 2
@@ -32,7 +32,7 @@ Backslash Escapes, 2
     - [Code Blocks](#code-blocks)
     - [Horizontal Rules](#horizontal-rules)
   - [Span Elements](#span-elements)
-    - [Links](#links)
+    - [Links (Anchor)](#links-anchor)
     - [Emphasis](#emphasis)
     - [Code](#code)
     - [Images](#images)

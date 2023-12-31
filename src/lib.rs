@@ -5,7 +5,15 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 fn slugify(text: &str) -> String {
-    percent_encode(text.replace(" ", "-").to_lowercase().as_bytes(), CONTROLS).to_string()
+    percent_encode(
+        text
+            .replace(" ", "-")
+            .replace("(", "")
+            .replace(")", "")
+            .to_lowercase()
+            .as_bytes(), 
+        CONTROLS
+    ).to_string()
 }
 
 pub struct Heading {
