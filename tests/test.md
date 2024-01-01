@@ -145,7 +145,7 @@ and `&` in your example code needs to be escaped.)
 ## Block Elements
 
 
-### Paragraphs and Line Breaks
+### Paragraphs and Line Breaks `<br />`
 
 A paragraph is simply one or more consecutive lines of text, separated
 by one or more blank lines. (A blank line is any line that looks like a
@@ -258,7 +258,7 @@ example, with BBEdit, you can make a selection and choose Increase
 Quote Level from the Text menu.
 
 
-### Lists
+### Lists, unordered and ordered
 
 Markdown supports ordered (numbered) and unordered (bulleted) lists.
 
@@ -505,7 +505,7 @@ following lines will produce a horizontal rule:
 
 ## Span Elements
 
-### Links
+### Links (Anchors)
 
 Markdown supports two style of links: *inline* and *reference*.
 
@@ -801,7 +801,7 @@ use regular HTML `<img>` tags.
 
 ## Miscellaneous
 
-### Automatic Links
+### 1. Automatic Links
 
 Markdown supports a shortcut style for creating "automatic" links for URLs and email addresses: simply surround the URL or email address with angle brackets. What this means is that if you want to show the actual text of a URL or email address, and also have it be a clickable link, you can do this:
 
@@ -834,7 +834,7 @@ will probably eventually start receiving spam.)
 
 
 
-### Backslash Escapes
+### 2. Backslash Escapes
 
 Markdown allows you to use backslash escapes to generate literal
 characters which would otherwise have special meaning in Markdown's
