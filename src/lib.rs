@@ -8,7 +8,7 @@ fn slugify(text: &str) -> String {
     percent_encode(
         text
             .chars()
-            .filter(|c| c.is_alphanumeric() || *c == ' ')
+            .filter(|c| c.is_alphanumeric() || *c == ' ' || *c == '-')
             .map(|c| match c {
                 ' ' => '-',
                 _   => c.to_ascii_lowercase()
